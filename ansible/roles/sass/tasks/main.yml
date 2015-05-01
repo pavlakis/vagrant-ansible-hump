@@ -1,0 +1,20 @@
+- name: Latest version of Ruby is installed
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - ruby2.0
+    - ruby2.0-dev
+
+- name: Symlink exists for Ruby 2.0
+  file: src=/usr/bin/ruby2.0 dest=/usr/local/bin/ruby state=link
+
+- name: Symlink exists for Ruby Gems 2.0
+  file: src=/usr/bin/gem2.0 dest=/usr/local/bin/gem state=link
+
+- name: Install bower and gulp
+  shell: npm install -g bower gulp
+
+- name: Install sass
+  shell: gem install sass
+
+- name: Install bundler
+  shell: gem install bundler

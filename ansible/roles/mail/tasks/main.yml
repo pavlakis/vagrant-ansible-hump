@@ -1,0 +1,2 @@
+- name: Install Mailcatcher
+  shell: gem install mailcatcher

@@ -10,13 +10,13 @@
     - vars/common.yml
     - [ "vars/hiawathaphp.yml"]
   roles:
-    - init
+    #- init
     - php5-cli
-    - php5-fpm
-    - mariadb
-    - composer
-    - phpcommon
-    - hiawatha
-    - sass
-    - mail
-    - app
+    #- php5-fpm
+    #- mariadb
+    #- composer
+    #- phpcommon
+    #- hiawatha
+    #- sass
+    #- mail
+    #- app

@@ -1,8 +1,36 @@
 - name: Install php5-cli
   sudo: yes
   apt: pkg=php5-cli state=latest
+  when: ansible_os_family == "Debian"
 
-- name: ensure timezone is set in cli php.ini
-  lineinfile: dest=/etc/php5/cli/php.ini
-              regexp='date.timezone ='
-              line='date.timezone = {{ timezone }}'
+- name: Add repository
+  sudo: yes
+  get_url: url=https://www.softwarecollections.org/en/scls/rhscl/rh-php56/epel-7-x86_64/download/rhscl-rh-php56-epel-7-x86_64.noarch.rpm dest=/usr/local/src/
+  when: ansible_os_family == "RedHat"
+
+- name: Add repository
+  sudo: yes
+  get_url: url=https://www.softwarecollections.org/en/scls/remi/php56more/epel-7-x86_64/download/remi-php56more-epel-7-x86_64.noarch.rpm dest=/usr/local/src/
+  when: ansible_os_family == "RedHat"
+
+- name: Install scl-utils
+  sudo: yes
+  yum: name="scl-utils"
+  when: ansible_os_family == "RedHat"
+
+- name: Install php56
+  sudo: yes
+  yum: name=rh-php56
+  when: ansible_os_family == "RedHat"
+
+- name: "enable php from scl"
+  sudo: yes
+  command: scl enable rh-php56 bash
+  when: ansible_os_family == "RedHat"
+
+- name: Install php56more
+  sudo: yes
+  yum: name=/usr/local/src/remi-php56more-epel-7-x86_64-1-2.noarch.rpm state=present enablerepo=remi-php56more-epel-7-x86_64.re
+  yum: name=remi-php56more-epel-6-x86_64.noarch
+  when: ansible_os_family == "RedHat"
+
